@@ -1,7 +1,7 @@
 import * as functions from "firebase-functions";
 import SpotifyWebApi = require("spotify-web-api-node");
 
-export const helloWorld = functions.https.onCall(async (data, context) => {
+export const searchArtists = functions.https.onCall(async (data, context) => {
   const spotifyApi = new SpotifyWebApi({
     clientId: process.env.CLIENT_ID,
     clientSecret: process.env.CLIENT_SECRET,
