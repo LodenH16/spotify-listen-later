@@ -1,9 +1,9 @@
 import * as functions from "firebase-functions";
+import SpotifyWebApi = require("spotify-web-api-node");
 
-// // Start writing Firebase Functions
-// // https://firebase.google.com/docs/functions/typescript
+const spotifyApi = new SpotifyWebApi();
+spotifyApi.setAccessToken(process.env.TEMPORARY_ACCESS_TOKEN || "");
 
-export const helloWorld = functions.https.onRequest((request, response) => {
-  functions.logger.info("Hello logs!", { structuredData: true });
-  response.send("Hello from Firebase!");
+export const helloWorld = functions.https.onCall(async (data, context) => {
+  return spotifyApi.searchArtists("Love");
 });
