@@ -10,5 +10,5 @@ export const searchArtists = functions.https.onCall(async (data, context) => {
     spotifyApi.setAccessToken(data.body["access_token"]);
   });
 
-  return spotifyApi.searchArtists("Love");
+  return spotifyApi.searchArtists(data);
 });
