@@ -12,10 +12,8 @@ connectFunctionsEmulator(functions, "localhost", 5001);
 
 export default function Home() {
   const [searchResults, setSearchResults] = useState();
-  const [searchArtists, executing, error] = useHttpsCallable(
-    functions,
-    "searchArtists"
-  );
+  const [searchArtists, searchArtistsExecuting, searchArtistsError] =
+    useHttpsCallable(functions, "searchArtists");
   console.log(searchResults?.data);
   return (
     <div className={styles.container}>
@@ -25,7 +23,9 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <button
-        onClick={async () => setSearchResults(await searchArtists("love"))}
+        onClick={async () =>
+          setSearchResults(await searchArtists("believe caamp"))
+        }
       >
         Here is my button
       </button>
