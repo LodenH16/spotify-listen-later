@@ -23,11 +23,9 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <button
-        onClick={async () =>
-          setSearchResults(await searchArtists("believe caamp"))
-        }
+        onClick={async () => setSearchResults(await searchArtists("caamp"))}
       >
-        Here is my button
+        Search Artists
       </button>
     </div>
   );
