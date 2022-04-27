@@ -23,7 +23,10 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <button
-        onClick={async () => setSearchResults(await searchArtists("caamp"))}
+        disabled={searchArtistsExecuting}
+        onClick={async () =>
+          setSearchResults(await searchArtists("hippocampus"))
+        }
       >
         Search Artists
       </button>
