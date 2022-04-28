@@ -8,7 +8,7 @@ import { getFunctions, connectFunctionsEmulator } from "firebase/functions";
 import { useHttpsCallable } from "react-firebase-hooks/functions";
 import { useForm } from "react-hook-form";
 
-const functions = getFunctions(getApp());
+const functions = getFunctions(app);
 connectFunctionsEmulator(functions, "localhost", 5001);
 
 export default function Home() {
@@ -25,7 +25,7 @@ export default function Home() {
     setSearchResults(await searchArtists(values.artistName));
   };
 
-  console.log(searchResults?.data.body.artists);
+  console.log(searchResults?.data.body.artists || "nothing yet");
 
   return (
     <div className={styles.container}>
