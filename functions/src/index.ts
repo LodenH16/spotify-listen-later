@@ -1,5 +1,18 @@
 import * as functions from "firebase-functions";
 import SpotifyWebApi = require("spotify-web-api-node");
+import admin = require("firebase-admin");
+
+admin.initializeApp();
+
+export const createUserFirestoreRecord = functions.auth
+  .user()
+  .onCreate((user) => {
+    console.log(user);
+    admin.firestore().collection("users").add({
+      user_name: user.displayName,
+      uid: user.uid,
+    });
+  });
 
 export const searchArtists = functions.https.onCall(async (data, context) => {
   const spotifyApi = new SpotifyWebApi({
