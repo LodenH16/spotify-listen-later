@@ -7,7 +7,6 @@ admin.initializeApp();
 export const createUserFirestoreRecord = functions.auth
   .user()
   .onCreate((user) => {
-    console.log(user);
     admin.firestore().collection("users").add({
       user_name: user.displayName,
       uid: user.uid,
