@@ -13,6 +13,21 @@ export const createUserFirestoreRecord = functions.auth
     });
   });
 
+export const createUserWithSpotify = functions.https.onCall(
+  async ({ token }) => {
+    const spotifyApi = new SpotifyWebApi();
+    spotifyApi.setAccessToken(token);
+    spotifyApi.getMe().then(
+      (user) => {
+        console.log("user", user);
+      },
+      (error) => {
+        console.log("⚠there was an error", error);
+      }
+    );
+  }
+);
+
 export const searchArtists = functions.https.onCall(async (data) => {
   const spotifyApi = new SpotifyWebApi({
     clientId: process.env.CLIENT_ID,
