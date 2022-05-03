@@ -53,7 +53,7 @@ export default function Home() {
       {!user && <button onClick={signInWithGoogle}>Sign in with Google</button>}
       <SpotifyAuth
         redirectUri="http://localhost:3000/"
-        clientID={"152c100bd9504b91b655e6c7cee3120d"}
+        clientID={process.env.NEXT_PUBLIC_SPOTIFY_CLIENT_ID}
         scopes={[Scopes.playlistModifyPrivate, Scopes.playlistReadPrivate]}
         onAccessToken={(token) => console.log("token acquired 🥇", token)}
       />
