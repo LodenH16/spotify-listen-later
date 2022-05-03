@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import Head from "next/head";
 import Image from "next/image";
+import { SpotifyAuth, Scopes } from "react-spotify-auth";
 import styles from "../styles/Home.module.css";
 import { app } from "../firebase/clientApp";
 import { getApp } from "firebase/app";
@@ -50,6 +51,12 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       {!user && <button onClick={signInWithGoogle}>Sign in with Google</button>}
+      <SpotifyAuth
+        redirectUri="http://localhost:3000/"
+        clientID={"152c100bd9504b91b655e6c7cee3120d"}
+        scopes={[Scopes.playlistModifyPrivate, Scopes.playlistReadPrivate]}
+        onAccessToken={(token) => console.log("token acquired 🥇", token)}
+      />
       <form onSubmit={handleSubmit(searchArtistsSubmit)}>
         <input {...register("artistName")} placeholder="Artist Name" />
         <button type="submit" disabled={searchArtistsExecuting}>
