@@ -24,6 +24,8 @@ export default function Home() {
   const [searchResults, setSearchResults] = useState(null);
   const [searchArtists, searchArtistsExecuting, searchArtistsError] =
     useHttpsCallable(functions, "searchArtists");
+  const [loginWithSpotify, loginWithSpotifyExecuting, loginWithSpotifyError] =
+    useHttpsCallable(functions, "createUserWithSpotify");
   const {
     register,
     handleSubmit,
@@ -40,6 +42,12 @@ export default function Home() {
     setSearchResults(await searchArtists(values.artistName));
   };
 
+  const handleSpotifyLogin = async (token) => {
+    console.log("token:", token);
+    loginWithSpotify({ token: token });
+    //signInWithCustomToken(auth, token);
+  };
+
   console.log(searchResults?.data.body.artists || "nothing yet");
   console.log("user: ", user);
 
@@ -54,8 +62,12 @@ export default function Home() {
       <SpotifyAuth
         redirectUri="http://localhost:3000/"
         clientID={process.env.NEXT_PUBLIC_SPOTIFY_CLIENT_ID}
-        scopes={[Scopes.playlistModifyPrivate, Scopes.playlistReadPrivate]}
-        onAccessToken={(token) => console.log("token acquired 🥇", token)}
+        scopes={[
+          "playlist-modify-private",
+          "playlist-read-private",
+          "user-read-email",
+        ]}
+        onAccessToken={(token) => handleSpotifyLogin(token)}
       />
       <form onSubmit={handleSubmit(searchArtistsSubmit)}>
         <input {...register("artistName")} placeholder="Artist Name" />
