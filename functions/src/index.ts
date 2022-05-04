@@ -3,7 +3,8 @@ import SpotifyWebApi = require("spotify-web-api-node");
 import admin = require("firebase-admin");
 
 admin.initializeApp();
-
+// create user document in Firestore when a new
+// user is added in Auth
 export const createUserFirestoreRecord = functions.auth
   .user()
   .onCreate((user) => {
@@ -14,6 +15,7 @@ export const createUserFirestoreRecord = functions.auth
     });
   });
 
+// add a user to auth when they login with Spotify
 export const createUserWithSpotify = functions.https.onCall(
   async ({ token }) => {
     const spotifyApi = new SpotifyWebApi();
@@ -27,6 +29,7 @@ export const createUserWithSpotify = functions.https.onCall(
   }
 );
 
+// search artists with a string and return the results
 export const searchArtists = functions.https.onCall(async (data) => {
   const spotifyApi = new SpotifyWebApi({
     clientId: process.env.CLIENT_ID,
