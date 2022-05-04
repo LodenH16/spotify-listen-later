@@ -8,8 +8,9 @@ export const createUserFirestoreRecord = functions.auth
   .user()
   .onCreate((user) => {
     admin.firestore().collection("users").add({
-      user_name: user.displayName,
+      displayName: user.displayName,
       uid: user.uid,
+      email: user.email,
     });
   });
 
@@ -17,14 +18,12 @@ export const createUserWithSpotify = functions.https.onCall(
   async ({ token }) => {
     const spotifyApi = new SpotifyWebApi();
     spotifyApi.setAccessToken(token);
-    spotifyApi.getMe().then(
-      (user) => {
-        console.log("user", user);
-      },
-      (error) => {
-        console.log("⚠there was an error", error);
-      }
-    );
+    const user = await spotifyApi.getMe().then((data) => data.body);
+    console.log(user);
+    admin.auth().createUser({
+      email: user.email,
+      displayName: user.display_name,
+    });
   }
 );
 
