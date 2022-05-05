@@ -58,19 +58,23 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       {!user && <button onClick={signInWithGoogle}>Sign in with Google</button>}
-      <SpotifyAuth
-        redirectUri="http://localhost:3000/"
-        clientID={process.env.NEXT_PUBLIC_SPOTIFY_CLIENT_ID}
-        scopes={[
-          "playlist-modify-private",
-          "playlist-read-private",
-          "user-read-email",
-        ]}
-        onAccessToken={(token) => handleSpotifyLogin(token)}
-      />
-      {user && <>
-        <p>user exists!</p>
-      </>}
+      {!user && (
+        <SpotifyAuth
+          redirectUri="http://localhost:3000/"
+          clientID={process.env.NEXT_PUBLIC_SPOTIFY_CLIENT_ID}
+          scopes={[
+            "playlist-modify-private",
+            "playlist-read-private",
+            "user-read-email",
+          ]}
+          onAccessToken={(token) => handleSpotifyLogin(token)}
+        />
+      )}
+      {user && (
+        <>
+          <p>user exists!</p>
+        </>
+      )}
       <form onSubmit={handleSubmit(searchArtistsSubmit)}>
         <input {...register("artistName")} placeholder="Artist Name" />
         <button type="submit" disabled={searchArtistsExecuting}>
