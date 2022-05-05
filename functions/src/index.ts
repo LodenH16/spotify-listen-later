@@ -20,12 +20,14 @@ export const createUserWithSpotify = functions.https.onCall(
   async ({ token }) => {
     const spotifyApi = new SpotifyWebApi();
     spotifyApi.setAccessToken(token);
+
     const user = await spotifyApi.getMe().then((data) => data.body);
-    console.log(user);
+
     admin.auth().createUser({
       email: user.email,
       displayName: user.display_name,
     });
+
     return user;
   }
 );
