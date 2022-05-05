@@ -26,6 +26,7 @@ export const createUserWithSpotify = functions.https.onCall(
       email: user.email,
       displayName: user.display_name,
     });
+    return user;
   }
 );
 
