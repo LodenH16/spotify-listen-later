@@ -21,14 +21,30 @@ export const createUserWithSpotify = functions.https.onCall(
     const spotifyApi = new SpotifyWebApi();
     spotifyApi.setAccessToken(token);
 
-    const user = await spotifyApi.getMe().then((data) => data.body);
+    const spotifyUser = await spotifyApi.getMe().then((data) => data.body);
 
-    admin.auth().createUser({
-      email: user.email,
-      displayName: user.display_name,
-    });
+    const existingUser = await admin
+      .firestore()
+      .collection("users")
+      .where("email", "==", spotifyUser.email)
+      .get();
 
-    return user;
+    if (!existingUser.empty) {
+      return existingUser;
+    } else {
+      return await admin
+        .auth()
+        .createUser({
+          email: spotifyUser.email,
+          displayName: spotifyUser.display_name,
+        })
+        .then((data) => {
+          return data;
+        })
+        .catch((err) => {
+          console.log("error: ", err);
+        });
+    }
   }
 );
 
