@@ -44,7 +44,7 @@ export default function Home() {
 
   const handleSpotifyLogin = async (token) => {
     console.log("token:", token);
-    loginWithSpotify({ token: token });
+    await loginWithSpotify({ token: token }).then((user) => setUser(user));
     //signInWithCustomToken(auth, token);
   };
 
