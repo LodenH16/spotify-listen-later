@@ -68,6 +68,9 @@ export default function Home() {
         ]}
         onAccessToken={(token) => handleSpotifyLogin(token)}
       />
+      {user && <>
+        <p>user exists!</p>
+      </>}
       <form onSubmit={handleSubmit(searchArtistsSubmit)}>
         <input {...register("artistName")} placeholder="Artist Name" />
         <button type="submit" disabled={searchArtistsExecuting}>
