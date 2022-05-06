@@ -1,6 +1,7 @@
 import * as functions from "firebase-functions";
 import SpotifyWebApi = require("spotify-web-api-node");
 import admin = require("firebase-admin");
+import { v4 as uuidv4 } from "uuid";
 
 admin.initializeApp();
 // create user document in Firestore when a new
@@ -32,18 +33,12 @@ export const createUserWithSpotify = functions.https.onCall(
     if (!existingUser.empty) {
       return existingUser;
     } else {
-      return await admin
-        .auth()
-        .createUser({
-          email: spotifyUser.email,
-          displayName: spotifyUser.display_name,
-        })
-        .then((data) => {
-          return data;
-        })
-        .catch((err) => {
-          console.log("error: ", err);
-        });
+      return await admin.firestore().collection("users").add({
+        displayName: spotifyUser.display_name,
+        uid: uuidv4(),
+        email: spotifyUser.email,
+        spotifyUser: spotifyUser,
+      });
     }
   }
 );
