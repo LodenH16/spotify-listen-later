@@ -14,9 +14,11 @@
   },
   "main": "lib/index.js",
   "dependencies": {
+    "@types/uuid": "^8.3.4",
     "firebase-admin": "^10.0.2",
     "firebase-functions": "^3.18.0",
-    "spotify-web-api-node": "^5.0.2"
+    "spotify-web-api-node": "^5.0.2",
+    "uuid": "^8.3.2"
   },
   "devDependencies": {
     "@types/spotify-web-api-node": "^5.0.7",
