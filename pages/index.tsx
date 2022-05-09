@@ -40,7 +40,10 @@ export default function Home() {
   } = useForm(); // form hook https://react-hook-form.com/
 
   const router = useRouter(); // Nextjs router to get url params for Spotify login
-  console.log(router.query);
+
+  if (router.query.length) {
+    console.log("query is here: ", router.query);
+  }
 
   useEffect(() => {
     app.auth().onAuthStateChanged((user) => {
@@ -53,12 +56,12 @@ export default function Home() {
   };
 
   const handleSpotifyLogin = async (token) => {
-    console.log("token:", token);
+    //console.log("token:", token);
     await loginWithSpotify({ token: token }).then((user) => setUser(user));
   };
 
-  console.log(searchResults?.data.body.artists || "nothing yet");
-  console.log("user: ", user);
+  //console.log(searchResults?.data.body.artists || "nothing yet");
+  //console.log("user: ", user);
 
   return (
     <div className={styles.container}>
