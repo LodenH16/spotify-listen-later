@@ -37,7 +37,7 @@ export default function Home() {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm();
+  } = useForm(); // form hook https://react-hook-form.com/
 
   const router = useRouter(); // Nextjs router to get url params for Spotify login
   console.log(router.query);
