@@ -14,16 +14,21 @@ import { getAuth, connectAuthEmulator } from "firebase/auth";
 import { useHttpsCallable } from "react-firebase-hooks/functions";
 import { useForm } from "react-hook-form";
 
+// init firebase services
 const functions = getFunctions(app);
 const db = getFirestore();
 const auth = getAuth();
+// connect firebase emulators
 connectFunctionsEmulator(functions, "localhost", 5001);
 connectFirestoreEmulator(db, "localhost", 8080);
 connectAuthEmulator(auth, "http://localhost:9099");
+//* uncomment the above lines to test firebase services locally
 
 export default function Home() {
+  // states
   const [user, setUser] = useState(null);
   const [searchResults, setSearchResults] = useState(null);
+  // Firebase Function Hooks https://github.com/CSFrequency/react-firebase-hooks
   const [searchArtists, searchArtistsExecuting, searchArtistsError] =
     useHttpsCallable(functions, "searchArtists");
   const [loginWithSpotify, loginWithSpotifyExecuting, loginWithSpotifyError] =
@@ -33,8 +38,10 @@ export default function Home() {
     handleSubmit,
     formState: { errors },
   } = useForm();
-  const router = useRouter();
+
+  const router = useRouter(); // Nextjs router to get url params for Spotify login
   console.log(router.query);
+
   useEffect(() => {
     app.auth().onAuthStateChanged((user) => {
       setUser(user);
