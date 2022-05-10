@@ -33,6 +33,7 @@ export const createUserWithSpotify = functions.https.onCall(
         // set access token and refresh token
         spotifyApi.setAccessToken(data.body["access_token"]);
         spotifyApi.setRefreshToken(data.body["refresh_token"]);
+        // calculate token expiration
         tokenExpirationEpoch =
           new Date().getTime() / 1000 + data.body["expires_in"];
       })
