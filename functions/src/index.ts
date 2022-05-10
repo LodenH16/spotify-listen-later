@@ -27,15 +27,16 @@ export const createUserWithSpotify = functions.https.onCall(
     });
     // access token grant with auth code
     // https://github.com/thelinmichael/spotify-web-api-node/blob/master/examples/access-token-refresh.js
-    console.log("auth code ***************", authCode);
-    spotifyApi.authorizationCodeGrant(authCode).then((data) => {
-      // set access token and refresh token
-      spotifyApi.setAccessToken(data.body["access_token"]);
-      spotifyApi.setRefreshToken(data.body["refresh_token"]);
-
-      tokenExpirationEpoch =
-        new Date().getTime() / 1000 + data.body["expires_in"];
-    });
+    await spotifyApi
+      .authorizationCodeGrant(authCode)
+      .then((data) => {
+        // set access token and refresh token
+        spotifyApi.setAccessToken(data.body["access_token"]);
+        spotifyApi.setRefreshToken(data.body["refresh_token"]);
+        tokenExpirationEpoch =
+          new Date().getTime() / 1000 + data.body["expires_in"];
+      })
+      .catch((err) => console.error(err));
 
     const spotifyUser = await spotifyApi.getMe().then((data) => data.body);
 
@@ -48,12 +49,15 @@ export const createUserWithSpotify = functions.https.onCall(
     if (!existingUser.empty) {
       return existingUser;
     } else {
-      return await admin.firestore().collection("users").add({
+      await admin.firestore().collection("users").add({
         displayName: spotifyUser.display_name,
         uid: uuidv4(),
         email: spotifyUser.email,
         spotifyUser: spotifyUser,
+        tokenExpiresIn: tokenExpirationEpoch,
+        spotifyCredentials: spotifyApi,
       });
+      return spotifyUser;
     }
   }
 );
