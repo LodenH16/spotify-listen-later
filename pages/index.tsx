@@ -4,6 +4,7 @@ import Image from "next/image";
 import { useRouter } from "next/router";
 import { SpotifyAuth, Scopes } from "react-spotify-auth";
 import SpotifyLoginButton from "../components/SpotifyLoginButton/index";
+import ArtistProfile from "../components/ArtistProfile/ArtistProfile";
 import styles from "../styles/Home.module.css";
 import { app } from "../firebase/clientApp";
 import { getApp } from "firebase/app";
@@ -73,7 +74,7 @@ export default function Home() {
     //console.log("token:", token);
   };
 
-  //console.log(searchResults?.data.body.artists || "nothing yet");
+  //console.log(searchResults?.data || "nothing yet");
   //console.log("user: ", user);
 
   return (
@@ -96,6 +97,10 @@ export default function Home() {
           Search Artists
         </button>
       </form>
+      {searchResults &&
+        searchResults.data.body.artists.items.map((artist, index) => {
+          return <ArtistProfile key={`searchResult${index}`} props={artist} />;
+        })}
     </div>
   );
 }
