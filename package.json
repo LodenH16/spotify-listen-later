@@ -19,6 +19,7 @@
     "react-firebase-hooks": "^5.0.3",
     "react-hook-form": "^7.30.0",
     "react-spotify-auth": "^1.4.3",
+    "styled-components": "^5.3.5",
     "uuid": "^8.3.2"
   },
   "devDependencies": {
