@@ -44,7 +44,19 @@ export default function Home() {
   useEffect(() => {
     //console.log("spotify code here: ", spotifyCode);
     setSpotifyCode(router.query);
-    console.log("router query here: ", router.query);
+
+    // you have to define an async function in a useEffect
+    const callLoginFunction = async () => {
+      console.log("router params: ", router.query.code);
+      await loginWithSpotify({ authCode: router.query.code }).then((user) =>
+        setUser(user)
+      );
+    };
+
+    if (router.query.code) {
+      console.log("sending the login function ✈");
+      callLoginFunction();
+    }
   }, [router.query]);
 
   useEffect(() => {
@@ -59,7 +71,6 @@ export default function Home() {
 
   const handleSpotifyLogin = async (token) => {
     //console.log("token:", token);
-    await loginWithSpotify({ token: token }).then((user) => setUser(user));
   };
 
   //console.log(searchResults?.data.body.artists || "nothing yet");
