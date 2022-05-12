@@ -16,12 +16,14 @@ export default function ArtistProfile({ props }) {
         />
       )}
       <p>{name}</p>
-      <p>
-        Genres:{" "}
-        {genres.map((genre, index) => {
-          return <p key={`${name}genre${index}`}>{genre}</p>;
-        })}
-      </p>
+      {genres.length > 0 && (
+        <p>
+          Genres:{" "}
+          {genres.map((genre, index) => {
+            return <p key={`${name}genre${index}`}>{genre}</p>;
+          })}
+        </p>
+      )}
     </ArtistCard>
   );
 }
