@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import Head from "next/head";
 import Image from "next/image";
 import { useRouter } from "next/router";
-import { SpotifyAuth, Scopes } from "react-spotify-auth";
 import SpotifyLoginButton from "../components/SpotifyLoginButton/index";
 import ArtistProfile from "../components/ArtistProfile/ArtistProfile";
 import { ArtistCardWrapper } from "../styles/styles";
