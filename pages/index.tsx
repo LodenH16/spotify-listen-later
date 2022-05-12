@@ -49,7 +49,7 @@ export default function Home() {
 
     // you have to define an async function in a useEffect
     const callLoginFunction = async () => {
-      console.log("router params: ", router.query.code);
+      //console.log("router params: ", router.query.code);
       await loginWithSpotify({ authCode: router.query.code }).then((user) =>
         setUser(user)
       );
