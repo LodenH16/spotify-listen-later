@@ -5,5 +5,7 @@ export const ArtistCard = styled.div`
   background-color: #e8f0fe;
   padding: 10px;
   margin: 5px;
-  width: 230px;
+  min-width: 170px;
+  height: auto;
+  line-height: 0.8;
 `;
