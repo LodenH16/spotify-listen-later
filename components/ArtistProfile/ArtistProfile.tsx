@@ -11,8 +11,8 @@ export default function ArtistProfile({ props }) {
         <Image
           src={images[0].url}
           alt={`${name} profile image`}
-          width={200}
-          height={200}
+          width={150}
+          height={150}
         />
       )}
       <p>{name}</p>
