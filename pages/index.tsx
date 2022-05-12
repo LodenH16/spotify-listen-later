@@ -5,6 +5,7 @@ import { useRouter } from "next/router";
 import { SpotifyAuth, Scopes } from "react-spotify-auth";
 import SpotifyLoginButton from "../components/SpotifyLoginButton/index";
 import ArtistProfile from "../components/ArtistProfile/ArtistProfile";
+import { ArtistCardWrapper } from "../styles/styles";
 import styles from "../styles/Home.module.css";
 import { app } from "../firebase/clientApp";
 import { getApp } from "firebase/app";
@@ -97,10 +98,15 @@ export default function Home() {
           Search Artists
         </button>
       </form>
-      {searchResults &&
-        searchResults.data.body.artists.items.map((artist, index) => {
-          return <ArtistProfile key={`searchResult${index}`} props={artist} />;
-        })}
+      {searchResults && (
+        <ArtistCardWrapper>
+          {searchResults.data.body.artists.items.map((artist, index) => {
+            return (
+              <ArtistProfile key={`searchResult${index}`} props={artist} />
+            );
+          })}
+        </ArtistCardWrapper>
+      )}
     </div>
   );
 }
