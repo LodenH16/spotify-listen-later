@@ -30,7 +30,7 @@ export default function Home() {
   // states
   const [user, setUser] = useState(null);
   const [searchResults, setSearchResults] = useState(null);
-  const [spotifyCode, setSpotifyCode] = useState(null);
+  const [spotifyCode, setSpotifyCode] = useState("");
   // Firebase Function Hooks https://github.com/CSFrequency/react-firebase-hooks
   const [searchArtists, searchArtistsExecuting, searchArtistsError] =
     useHttpsCallable(functions, "searchArtists");
@@ -55,7 +55,7 @@ export default function Home() {
     };
 
     if (router.query.code) {
-      console.log("sending the login function ✈");
+      //console.log("sending the login function ✈");
       callLoginFunction();
     }
   }, [router.query]);
