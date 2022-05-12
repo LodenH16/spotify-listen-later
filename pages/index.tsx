@@ -30,7 +30,6 @@ export default function Home() {
   // states
   const [user, setUser] = useState(null);
   const [searchResults, setSearchResults] = useState(null);
-  const [spotifyCode, setSpotifyCode] = useState("");
   // Firebase Function Hooks https://github.com/CSFrequency/react-firebase-hooks
   const [searchArtists, searchArtistsExecuting, searchArtistsError] =
     useHttpsCallable(functions, "searchArtists");
@@ -43,9 +42,6 @@ export default function Home() {
   } = useForm(); // form hook https://react-hook-form.com/
 
   useEffect(() => {
-    //console.log("spotify code here: ", spotifyCode);
-    setSpotifyCode(router.query);
-
     // you have to define an async function in a useEffect
     const callLoginFunction = async () => {
       //console.log("router params: ", router.query.code);
@@ -55,7 +51,7 @@ export default function Home() {
     };
 
     if (router.query.code) {
-      //console.log("sending the login function ✈");
+      console.log("sending the login function ✈");
       callLoginFunction();
     }
   }, [router.query]);
