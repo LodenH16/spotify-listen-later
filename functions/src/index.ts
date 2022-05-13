@@ -50,15 +50,20 @@ export const createUserWithSpotify = functions.https.onCall(
     if (!existingUser.empty) {
       return existingUser;
     } else {
-      await admin.firestore().collection("users").add({
-        displayName: spotifyUser.display_name,
-        uid: uuidv4(),
-        email: spotifyUser.email,
-        spotifyUser: spotifyUser,
-        tokenExpiresIn: tokenExpirationEpoch,
-        spotifyCredentials: spotifyApi,
-      });
-      return spotifyUser;
+      return await admin
+        .firestore()
+        .collection("users")
+        .add({
+          displayName: spotifyUser.display_name,
+          uid: uuidv4(),
+          email: spotifyUser.email,
+          spotifyUser: spotifyUser,
+          tokenExpiresIn: tokenExpirationEpoch,
+          spotifyCredentials: spotifyApi,
+        })
+        .then((doc) => {
+          return doc;
+        });
     }
   }
 );
