@@ -48,8 +48,10 @@ export const createUserWithSpotify = functions.https.onCall(
       .get();
 
     if (!existingUser.empty) {
+      console.log("returning existingUser");
       return existingUser;
     } else {
+      console.log("creating new user");
       return await admin
         .firestore()
         .collection("users")
