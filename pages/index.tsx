@@ -1,14 +1,11 @@
 import React, { useEffect, useState } from "react";
 import Head from "next/head";
-import Image from "next/image";
 import { useRouter } from "next/router";
 import SpotifyLoginButton from "../components/SpotifyLoginButton/index";
 import ArtistProfile from "../components/ArtistProfile/ArtistProfile";
 import { ArtistCardWrapper } from "../styles/styles";
 import styles from "../styles/Home.module.css";
 import { app } from "../firebase/clientApp";
-import { getApp } from "firebase/app";
-import { signInWithGoogle } from "../firebase/clientApp";
 import { getFunctions, connectFunctionsEmulator } from "firebase/functions";
 import { getFirestore, connectFirestoreEmulator } from "firebase/firestore";
 import { getAuth, connectAuthEmulator } from "firebase/auth";
@@ -28,7 +25,7 @@ connectAuthEmulator(auth, "http://localhost:9099");
 export default function Home() {
   const router = useRouter(); // Nextjs router to get url params for Spotify login
   // states
-  const [user, setUser] = useState(null);
+  const [user, setUser] = useState<object>({});
   const [searchResults, setSearchResults] = useState(null);
   // Firebase Function Hooks https://github.com/CSFrequency/react-firebase-hooks
   const [searchArtists, searchArtistsExecuting, searchArtistsError] =
