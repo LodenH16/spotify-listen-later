@@ -56,12 +56,6 @@ export default function Home() {
     }
   }, [router.query]);
 
-  useEffect(() => {
-    app.auth().onAuthStateChanged((user) => {
-      setUser(user);
-    });
-  }, []);
-
   const searchArtistsSubmit = async (values) => {
     setSearchResults(await searchArtists(values.artistName));
   };
