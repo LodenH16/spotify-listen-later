@@ -4,17 +4,6 @@ import admin = require("firebase-admin");
 import { v4 as uuidv4 } from "uuid";
 
 admin.initializeApp();
-// create user document in Firestore when a new
-// user is added in Auth
-export const createUserFirestoreRecord = functions.auth
-  .user()
-  .onCreate((user) => {
-    admin.firestore().collection("users").add({
-      displayName: user.displayName,
-      uid: user.uid,
-      email: user.email,
-    });
-  });
 
 // add a user to auth when they login with Spotify
 export const createUserWithSpotify = functions.https.onCall(
@@ -49,7 +38,7 @@ export const createUserWithSpotify = functions.https.onCall(
 
     if (!existingUser.empty) {
       console.log("returning existingUser");
-      return existingUser;
+      return existingUser.data();
     } else {
       console.log("creating new user");
       return await admin
