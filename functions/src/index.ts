@@ -46,7 +46,7 @@ export const createUserWithSpotify = functions.https.onCall(
         .collection("users")
         .withConverter(converter)
         .add({
-          displayName: spotifyUser.display_name,
+          displayName: spotifyUser.display_name || "",
           uid: uuidv4(),
           email: spotifyUser.email,
           spotifyUser: spotifyUser,
