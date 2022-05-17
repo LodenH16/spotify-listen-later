@@ -11,6 +11,7 @@ import { getFirestore, connectFirestoreEmulator } from "firebase/firestore";
 import { getAuth, connectAuthEmulator } from "firebase/auth";
 import { useHttpsCallable } from "react-firebase-hooks/functions";
 import { useForm } from "react-hook-form";
+import { User } from "../types/index";
 
 // init firebase services
 const functions = getFunctions(app);
@@ -25,13 +26,16 @@ connectAuthEmulator(auth, "http://localhost:9099");
 export default function Home() {
   const router = useRouter(); // Nextjs router to get url params for Spotify login
   // states
-  const [user, setUser] = useState<object>({});
+  const [user, setUser] = useState<User | null>(null);
   const [searchResults, setSearchResults] = useState(null);
   // Firebase Function Hooks https://github.com/CSFrequency/react-firebase-hooks
   const [searchArtists, searchArtistsExecuting, searchArtistsError] =
     useHttpsCallable(functions, "searchArtists");
   const [loginWithSpotify, loginWithSpotifyExecuting, loginWithSpotifyError] =
-    useHttpsCallable(functions, "createUserWithSpotify");
+    useHttpsCallable<{ authCode: string }, User>(
+      functions,
+      "createUserWithSpotify"
+    );
   const {
     register,
     handleSubmit,
@@ -42,9 +46,9 @@ export default function Home() {
     // you have to define an async function in a useEffect
     const callLoginFunction = async () => {
       //console.log("router params: ", router.query.code);
-      await loginWithSpotify({ authCode: router.query.code }).then((user) =>
-        setUser(user)
-      );
+      await loginWithSpotify({ authCode: router.query.code })
+        .then((user) => setUser(user?.data))
+        .catch((err) => console.error(err));
     };
 
     if (router.query.code) {
@@ -57,12 +61,8 @@ export default function Home() {
     setSearchResults(await searchArtists(values.artistName));
   };
 
-  const handleSpotifyLogin = async (token) => {
-    //console.log("token:", token);
-  };
-
   //console.log(searchResults?.data || "nothing yet");
-  //console.log("user: ", user);
+  console.log("user: ", user);
 
   return (
     <div className={styles.container}>
@@ -72,6 +72,9 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       {!user && <SpotifyLoginButton />}
+      <button onClick={() => router.push("http://localhost:3000")}>
+        reset url
+      </button>
       {user && (
         <>
           <p>user exists!</p>
