@@ -30,7 +30,7 @@ export default function Home() {
   const [searchResults, setSearchResults] = useState<object>();
   // Firebase Function Hooks https://github.com/CSFrequency/react-firebase-hooks
   const [searchArtists, searchArtistsExecuting, searchArtistsError] =
-    useHttpsCallable(functions, "searchArtists");
+    useHttpsCallable<string, object>(functions, "searchArtists");
   const [loginWithSpotify, loginWithSpotifyExecuting, loginWithSpotifyError] =
     useHttpsCallable<{ authCode: string }, User>(
       functions,
@@ -59,7 +59,9 @@ export default function Home() {
 
   const searchArtistsSubmit = async (values: { artistName: string }) => {
     console.log(values);
-    setSearchResults(await searchArtists(values.artistName));
+    await searchArtists(values.artistName)
+      .then((response) => setSearchResults(response!.data))
+      .catch((err) => console.error(err));
   };
 
   //console.log(searchResults?.data || "nothing yet");
