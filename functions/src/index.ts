@@ -44,6 +44,7 @@ export const createUserWithSpotify = functions.https.onCall(
       return await admin
         .firestore()
         .collection("users")
+        .withConverter(converter)
         .add({
           displayName: spotifyUser.display_name,
           uid: uuidv4(),
