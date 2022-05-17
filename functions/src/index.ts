@@ -6,6 +6,13 @@ import { User } from "../../types/index";
 
 admin.initializeApp();
 
+// firebase types stuff https://medium.com/swlh/using-firestore-with-typescript-65bd2a602945
+const converter = {
+  toFirestore: (data: User) => data,
+  fromFirestore: (snap: FirebaseFirestore.QueryDocumentSnapshot) =>
+    snap.data() as User,
+};
+
 // add a user to auth when they login with Spotify
 export const createUserWithSpotify = functions.https.onCall(
   async ({ authCode }) => {
