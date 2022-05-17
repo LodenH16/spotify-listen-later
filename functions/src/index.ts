@@ -16,7 +16,7 @@ const converter = {
 // add a user to auth when they login with Spotify
 export const createUserWithSpotify = functions.https.onCall(
   async ({ authCode }) => {
-    let tokenExpirationEpoch;
+    let tokenExpirationEpoch = 1;
     const spotifyApi = new SpotifyWebApi({
       clientId: process.env.CLIENT_ID,
       clientSecret: process.env.CLIENT_SECRET,
