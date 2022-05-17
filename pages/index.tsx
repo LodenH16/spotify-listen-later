@@ -26,7 +26,7 @@ connectAuthEmulator(auth, "http://localhost:9099");
 export default function Home() {
   const router = useRouter(); // Nextjs router to get url params for Spotify login
   // states
-  const [user, setUser] = useState<User | null>(null);
+  const [user, setUser] = useState<User>();
   const [searchResults, setSearchResults] = useState(null);
   // Firebase Function Hooks https://github.com/CSFrequency/react-firebase-hooks
   const [searchArtists, searchArtistsExecuting, searchArtistsError] =
