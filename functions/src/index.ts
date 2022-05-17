@@ -2,6 +2,7 @@ import * as functions from "firebase-functions";
 import SpotifyWebApi = require("spotify-web-api-node");
 import admin = require("firebase-admin");
 import { v4 as uuidv4 } from "uuid";
+import { User } from "../../types/index";
 
 admin.initializeApp();
 
