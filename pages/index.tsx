@@ -58,14 +58,13 @@ export default function Home() {
   }, [router.query]);
 
   const searchArtistsSubmit = async (values: { artistName: string }) => {
-    console.log(values);
     await searchArtists(values.artistName)
       .then((response) => setSearchResults(response!.data))
       .catch((err) => console.error(err));
   };
 
-  //console.log(searchResults?.data || "nothing yet");
-  console.log("user: ", user);
+  console.log(searchResults || "nothing yet");
+  //console.log("user: ", user);
 
   return (
     <div className={styles.container}>
@@ -91,7 +90,7 @@ export default function Home() {
       </form>
       {searchResults && (
         <ArtistCardWrapper>
-          {searchResults.data.body.artists.items.map((artist, index) => {
+          {searchResults.body.artists.items.map((artist, index) => {
             return (
               <ArtistProfile key={`searchResult${index}`} props={artist} />
             );
