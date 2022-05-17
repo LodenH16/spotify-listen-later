@@ -42,6 +42,7 @@ export const createUserWithSpotify = functions.https.onCall(
       .firestore()
       .collection("users")
       .where("email", "==", spotifyUser.email)
+      .withConverter(converter)
       .get();
 
     if (!existingUser.empty) {
