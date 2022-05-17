@@ -53,7 +53,9 @@ export const createUserWithSpotify = functions.https.onCall(
           spotifyCredentials: spotifyApi,
         })
         .then((doc) => {
-          return doc.get();
+          return doc.get().then((data) => {
+            return data.data();
+          });
         });
     }
   }
