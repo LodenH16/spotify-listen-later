@@ -38,7 +38,7 @@ export const createUserWithSpotify = functions.https.onCall(
 
     if (!existingUser.empty) {
       console.log("returning existingUser");
-      return existingUser.data();
+      return existingUser.docs[0].data();
     } else {
       console.log("creating new user");
       return await admin
