@@ -27,7 +27,7 @@ export default function Home() {
   const router = useRouter(); // Nextjs router to get url params for Spotify login
   // states
   const [user, setUser] = useState<User>();
-  const [searchResults, setSearchResults] = useState(null);
+  const [searchResults, setSearchResults] = useState<object>();
   // Firebase Function Hooks https://github.com/CSFrequency/react-firebase-hooks
   const [searchArtists, searchArtistsExecuting, searchArtistsError] =
     useHttpsCallable(functions, "searchArtists");
@@ -40,7 +40,7 @@ export default function Home() {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm(); // form hook https://react-hook-form.com/
+  } = useForm<{ artistName: string }>(); // form hook https://react-hook-form.com/
 
   useEffect(() => {
     // you have to define an async function in a useEffect
@@ -57,7 +57,8 @@ export default function Home() {
     }
   }, [router.query]);
 
-  const searchArtistsSubmit = async (values) => {
+  const searchArtistsSubmit = async (values: { artistName: string }) => {
+    console.log(values);
     setSearchResults(await searchArtists(values.artistName));
   };
 
