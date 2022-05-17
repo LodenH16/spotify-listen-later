@@ -51,7 +51,7 @@ export const createUserWithSpotify = functions.https.onCall(
           email: spotifyUser.email,
           spotifyUser: spotifyUser,
           tokenExpiresIn: tokenExpirationEpoch,
-          spotifyCredentials: spotifyApi,
+          spotifyCredentials: spotifyApi.getCredentials(),
         })
         .then((doc) => {
           return doc.get().then((data) => {
