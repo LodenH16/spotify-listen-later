@@ -53,7 +53,7 @@ export default function Home() {
 
     if (router.query.code) {
       console.log("sending the login function ✈");
-      callLoginFunction();
+      callLoginFunction(router.query.code[0]);
     }
   }, [router.query]);
 
