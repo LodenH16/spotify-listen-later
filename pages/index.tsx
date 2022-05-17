@@ -47,7 +47,7 @@ export default function Home() {
     const callLoginFunction = async () => {
       //console.log("router params: ", router.query.code);
       await loginWithSpotify({ authCode: router.query.code })
-        .then((user) => setUser(user?.data))
+        .then((user) => setUser(user!.data))
         .catch((err) => console.error(err));
     };
 
